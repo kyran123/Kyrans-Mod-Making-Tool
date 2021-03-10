@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="../Javascript/Libraries/Jquery/jquery-3.5.1.min.js"></script>
+        <script src="../Javascript/Libraries/Vue/vue.js"></script>
+        <script src="../Javascript/Libraries/Vue/vuex.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    <body>
+        <div id="app">
+            <project-list></project-list>
+        </div>
+    </body>
+    <script type="module">
+        import projectList from './Components/ProjectList.js';
+
+        window.onload = () => {
+            let app = new Vue({
+                el: '#app',
+                components: {
+                    projectList
+                },
+                data() {
+                    return {
+
+                    }
+                },
+                computed: {
+                    css: function() {
+                        return `
+                            <style>
+                                @font-face {
+                                    font-family: Consolas;
+                                    src: url('../Assets/Fonts/Consolas.ttf');
+                                }
+                                body {
+                                    padding: 0;
+                                    margin: 0;
+                                    overflow: hidden;
+                                    color: #EC4E20;
+                                }
+                                #app {
+                                    
+                                }
+                                .noselect {
+                                    -webkit-touch-callout: none;
+                                    -webkit-user-select: none;
+                                    -khtml-user-select: none;
+                                    -moz-user-select: none;
+                                    -ms-user-select: none;
+                                    user-select: none;
+                                }
+                                ::-webkit-scrollbar {
+                                    width: 10px;
+                                }
+                                ::-webkit-scrollbar-track {
+                                    background: transparent;
+                                }
+                                ::-webkit-scrollbar-thumb {
+                                    background: #555;
+                                    border-radius: 5px;
+                                    margin-right: 2px;
+                                }
+
+                                .icon-hover {
+                                    color: #ccc;
+                                }
+                                .icon-hover:hover {
+                                    cursor: pointer;
+                                    color: #fff;
+                                }
+                            </style>
+                        `
+                    },
+                    displayState: function() { return this.$store.getters.getContentState; }
+                },
+                mounted() {
+                    $('head').append(this.css);
+                        window.API.send("getFavorites", {});
+                        window.API.receive("showUsers", (data) => {
+                            if(data.length > 0) {
+                                data.forEach((user) => {
+                                    for(let favorite in this.$store.getters.getFavorites) {
+                                        if(user.player_id == favorite) {
+                                            user.isFavorite = true;
+                                        }
+                                    }
+                                    if(user.isFavorite == null) user.isFavorite = false;
+                                });
+                                this.$store.commit("setSearchedUsers", data);
+                            }
+                        });
+                },
+                methods: {
+                    
+                },
+                store: new Vuex.Store({
+                    state: {
+                        contentState: 'projects'
+                    },
+                    getters: {
+                        getContentState: (state) => { return state.contentState }
+                    },
+                    mutations: {
+                        setContentState: (state, value) => { state.contentState = value }
+                    }
+                })
+            })
+        }
+    </script>
+</html>

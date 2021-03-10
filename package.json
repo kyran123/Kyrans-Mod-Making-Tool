@@ -1,0 +1,39 @@
+{
+  "name": "Kyran's Mod making tool",
+  "version": "0.0.1",
+  "description": "A mod making tool for the game Europa Universalis 4",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "create-installer": "electron-builder"
+  },
+  "build": {
+    "appId": "Kyran-MMT",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "Assets/Build/PLlarge.ico"
+    },
+    "nsis": {
+      "installerIcon": "Assets/Build/PL.ico",
+      "uninstallerIcon": "Assets/Build/PL.ico",
+      "uninstallDisplayName": "PaladinsLive",
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "author": "Kyle Fransen",
+  "license": "MIT",
+  "dependencies": {
+    "electron-log": "^4.3.0",
+    "knex": "^0.95.1",
+    "moment": "^2.29.1",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "electron": "^9.0.3",
+    "electron-builder": "^22.9.1"
+  }
+}
