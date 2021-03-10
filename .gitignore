@@ -1,10 +1,7 @@
 /Assets
 /dist
-/PaladinsLive
-Libraries/Jquery
-Libraries/Materialize
-Libraries/Vue
+Javascript/Libraries/Jquery
+Javascript/Libraries/Materialize
+Javascript/Libraries/Vue
 /node_modules
 *.exe
-.env
-Research.txt
